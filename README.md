@@ -14,18 +14,19 @@ TEMPO              = "TEMPO", IDENTIFIER, ( "λ" | "=>", BOOL_EXP, {",", FACTOR}
 IMPRESSAO          = "::", " ' ", BOOL_EXP, " ' " ;
 ENQUANTO           = "ENQUANTO", "(", BOOL_EXP, ")", "\n", "λ", { STATEMENT, "λ" }, "\n";
 SE                 = "SE", "(", BOOL_EXP, ")", "\n", "λ", { STATEMENT, "λ" }, ( "λ" | ( "SENÃO", "\n", "λ", { STATEMENT, "λ" })), "\n" ;
-BOOL_EXP           = BOOL_TERM, { "or", BOOL_TERM } ;
-BOOL_TERM          = REL_EXP, { "and", REL_EXP } ;
+BOOL_EXP           = BOOL_TERM, { "ou", BOOL_TERM } ;
+BOOL_TERM          = REL_EXP, { "e", REL_EXP } ;
 REL_EXP            = EXPRESSION, { ( "==" | ">" | "<" ), EXPRESSION } ;
-EXPRESSION         = TERM, { ( "+" | "-" | ".." ), TERM } ;
+EXPRESSION         = TERM, { ( "+" | "-" ), TERM } ;
 TERM 	           = FACTOR, { ( "*" | "/" ), FACTOR } ;
-FACTOR             = NUMBER | STRING | IDENTIFIER | ( ( "+" | "-" | "not" ), FACTOR ) | "(", BOOL_EXP, ")" | "read", "(", ")" ;
+FACTOR             = NUMBER | STRING | IDENTIFIER | ( ( "+" | "-" | "!" ), FACTOR ) | "(", BOOL_EXP, ")" | "LEITURA" ;
 STRING             = "''", { LETTER | DIGIT | ESPECIAL_CHARACTER }, "''";
 IDENTIFIER         = LETTER, { LETTER | DIGIT | "_" } ;
 NUMBER             = DIGIT, { DIGIT } ;
 ESPECIAL_CHARACTER = ( "'" | "<" | "=" | "!" | "?" | "." | ";" | ":" | "-" | "..." ) ;
 LETTER             = ( "a" | "..." | "z" | "A" | "..." | "Z" ) ;
 DIGIT              = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" ) ;
+LEITURA :: = "LEITURA";
 ```
 
 Esta EBNF pode ser testada no site https://jacquev6.github.io/DrawGrammar/
@@ -42,6 +43,9 @@ SE (PARCIAL[percurso_a] 1:3 > DISTANCIA[percurso_a])
 	:: "soma das parciais não equivale à distância total da variável percurso_a"
 SENÃO
 	:: "soma das parciais equivale à distância total da variável percurso_a"
+
+
+:: "Fim do programa"
 ```
 
 ### Exemplo 2
@@ -59,4 +63,7 @@ ENQUANTO (DISTANCIA[percurso_b] > 0)
 	DISTANCIA[percurso_b] => DISTANCIA[percurso_b] - PARCIAL[percurso_b] contador
 
 	contador = contador + 1
+
+
+:: "Fim do programa"
 ```
