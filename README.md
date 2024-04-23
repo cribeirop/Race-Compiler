@@ -28,6 +28,8 @@ LETTER             = ( "a" | "..." | "z" | "A" | "..." | "Z" ) ;
 DIGIT              = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" ) ;
 ```
 
+Esta EBNF pode ser testada no site https://jacquev6.github.io/DrawGrammar/
+
 ## Exemplo de uso da linguagem
 
 ### Exemplo 1
