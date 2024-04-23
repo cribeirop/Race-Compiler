@@ -1,7 +1,9 @@
-# Race-Compiler
+# Stracy - A linguagem dos corredores
+
+O objetivo desta linguagem é auxiliar corredores a gerenciar seus treinos de forma mais eficiente. Atravando de variáveis que armazenam distâncias percorridas, tempos de treino e parciais de treinos, o corredor pode utilizar essas funcionalidades para gerenciar melhor seus treinos. Como a linguagem utiliza de uma funcionalidade parecida com a de um dicionário, seu acesso ainda não está representado na EBNF, mas a ideia é que o corredor possa acessar as variáveis de distância, tempo e parciais de treino de forma semelhante a um dicionário, como por exemplo: `DISTANCIA[percurso_a]` ou `TEMPO[percurso_a]`.
 
 ## EBNF
-λ
+
 ```
 BLOCK              = { STATEMENT };
 STATEMENT          = ( "λ" | ASSIGNMENT | DISTANCIA | PARCIAL | TEMPO | IMPRESSAO | ENQUANTO | SE ), "\n" ;
@@ -24,4 +26,35 @@ NUMBER             = DIGIT, { DIGIT } ;
 ESPECIAL_CHARACTER = ( "'" | "<" | "=" | "!" | "?" | "." | ";" | ":" | "-" | "..." ) ;
 LETTER             = ( "a" | "..." | "z" | "A" | "..." | "Z" ) ;
 DIGIT              = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" ) ;
+```
+
+## Exemplo de uso da linguagem
+
+### Exemplo 1
+```stracy
+DISTANCIA percurso_a PARCIAL 3 => 40;
+PARCIAL percurso_a  => 17, 13, 10;
+TEMPO percurso_a => 01:30:00, 01:10:00, 00:50:00;
+
+SE (PARCIAL[percurso_a] 1:3 > DISTANCIA[percurso_a])
+	:: "soma das parciais não equivale à distância total da variável percurso_a"
+SENÃO
+	:: "soma das parciais equivale à distância total da variável percurso_a"
+```
+
+### Exemplo 2
+```stracy
+DISTANCIA percurso_b PARCIAL => 20;
+PARCIAL percurso_b;
+TEMPO percurso_b;
+
+contador = 0;
+
+ENQUANTO (DISTANCIA[percurso_b] > 0)
+	PARCIAL[percurso_b] contador => LEITURA
+	TEMPO[percurso_b] contador => LEITURA
+	
+	DISTANCIA[percurso_b] => DISTANCIA[percurso_b] - PARCIAL[percurso_b] contador
+
+	contador = contador + 1
 ```
